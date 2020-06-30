@@ -1,0 +1,12 @@
+$bkgcolor: #323332;
+
+.loader-wrapper{
+    display: grid;
+    justify-content: center;
+    background: $bkgcolor;
+    position: fixed;
+}
+
+.logo{
+    margin-top: 65%;
+}

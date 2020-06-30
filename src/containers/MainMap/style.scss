@@ -1,0 +1,23 @@
+
+.map{
+    position: relative
+}
+
+.container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.link-button{
+    text-decoration: none;
+}
+
+.fab{
+    z-index: 1000;
+    position: absolute !important;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 30px !important;
+    margin-left: 5px !important;
+}

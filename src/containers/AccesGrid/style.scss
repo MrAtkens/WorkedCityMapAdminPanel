@@ -1,0 +1,54 @@
+.background{
+    background: #9CC560;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+}
+
+.form-paper{
+    text-align: center;
+    margin-top: 30%;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7) !important;
+
+}
+
+.form-unlock{
+    z-index: 1;
+    position: relative;
+    display: inline-flex;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5) !important;
+    background-color: #4CAF50 !important;
+}
+
+.lock-icon{
+    padding: 20px 20px 20px 20px;
+    font-size: 48pt !important;
+    color: white;
+}
+
+.form-input{
+    width: 100%;
+    margin: 15px 0 15px 0 !important;
+    color: #565A63
+}
+
+.form-control{
+    padding: 100px 50px 50px 50px; 
+}
+
+.form-button{
+    font-size: 16pt !important;
+    margin-top: 35px !important;
+    background-color: #274AE5 !important;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.main-header-form{
+    color: #274AE5 !important;
+}
+
