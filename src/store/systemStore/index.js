@@ -1,14 +1,17 @@
-import { observable, configure, action } from "mobx"
+import { observable, configure, action, computed } from "mobx"
 import {createContext} from 'react'
 
 import { authenticationService } from 'API'
-import { Role } from 'tools'
+import { authorizationStatusValidation } from 'tools'
+import { Role } from 'tools' 
+
 
 configure({ enforceActions: 'observed'})
 
 class SystemStore {
 
     @observable isOpen = false
+    @observable isPasswordShow = false
     @observable isRedirect = true
     @observable isAuthorize = false
     @observable loginError = false
@@ -22,33 +25,40 @@ class SystemStore {
     addedTeams: null,addedModerators: null, adminAddedDate: null})
 
     @action async singIn(userLogin, userPassword){
-        const user = await authenticationService.userSingInApi(userLogin, userPassword)
-        console.log(user)
-        if(user.moderatorAddedDate !== null){
-            this.setModerator(user)
+        const response = await authenticationService.userSingInApi(userLogin, userPassword)
+        authorizationStatusValidation(response.status, response.data.message)
+        console.log("NO")
+        const user = response.data
+        if(user.moderator !== undefined){
+            this.setModerator(user.moderator)
             this.setUserRole(Role.Moderator)
+            localStorage.setItem('token', user.moderator.token)
         }
-        else if(user.adminAddedDate !== null){
-            this.setAdmin(user)
+        if(user.admin !== undefined){
+            this.setAdmin(user.admin)
             this.setUserRole(Role.Admin)
+            localStorage.setItem('token', user.admin.token)
         }
-        localStorage.setItem('token', user.token)
-        if(this.admin.id !== null || this.moderator.id !== null)
+        if(this.showIsUserExist)
             this.setIsAuthorize(true)
     }
 
     @action async getUserData(){
-        const user = await authenticationService.userGetData()
-        if(user.moderatorAddedDate !== null){
-            this.setModerator(user)
+        const response = await authenticationService.userGetData()
+        console.log(response.status)
+        authorizationStatusValidation(response.status, response.data.message)
+        const user = response.data
+        console.log(user)
+        if(user.existingModerator !== undefined){
+            this.setModerator(user.existingModerator)
             this.setUserRole(Role.Moderator)
         }
-        else if(user.adminAddedDate !== null){
-            this.setAdmin(user)
+        else if(user.existingAdmin !== undefined){
+            this.setAdmin(user.existingAdmin)
             this.setUserRole(Role.Admin)
         }
         
-        if(this.admin.id !== null || this.moderator.id !== null)
+        if(this.showIsUserExist)
             this.setIsAuthorize(true)
         
     }
@@ -63,6 +73,31 @@ class SystemStore {
         }
         this.setIsAuthorize(false)
     }
+
+    @computed
+    get showAuthorize() {
+        return this.isAuthorize === false && localStorage.getItem('token') === null
+    }
+
+    @computed
+    get showIsUserExist(){
+        return this.admin.id !== null || this.moderator.id !== null
+    }
+    
+    @computed
+    get showIsUserDontExist(){
+        return this.moderator.id === null && this.admin.id === null && localStorage.getItem('token') !== null
+    }
+
+    @computed
+    get showUserFullName(){
+        if(this.userRole === Role.Admin)
+            return `${this.admin.lastName} ${this.admin.firstName}`
+        else if(this.userRole === Role.Moderator)
+            return `${this.moderator.lastName} ${this.moderator.firstName}`
+        return "TEST"
+    }
+
 
     @action setModerator(moderator){
         this.moderator = moderator
@@ -86,6 +121,10 @@ class SystemStore {
 
     @action setIsRedirect(status){
         this.isRedirect = status
+    }
+
+    @action setIsPasswordShow(status){
+        this.isPasswordShow = status
     }
 
     @action setIsAuthorize(status){

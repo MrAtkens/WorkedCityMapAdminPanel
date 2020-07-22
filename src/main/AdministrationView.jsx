@@ -1,20 +1,23 @@
 import React, { useContext } from 'react'
+import { observer } from "mobx-react";
 import { ToastContainer } from 'react-toastify'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, List,
 IconButton, ListItem, ListItemIcon, ListItemText, Avatar } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 import { Link } from 'react-router-dom'
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import PaymentIcon from '@material-ui/icons/Payment';
-import CategoryIcon from '@material-ui/icons/Category';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import PersonIcon from '@material-ui/icons/Person';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 
 import { SystemStoreContext } from 'store'
-import switchRoutes from '../AdminView/switchRoutesAdmin'
+import SwitchRoutes from './switchRouter'
+import { ModeratorsList } from './ViewLists/moderatorList'
+import { AdminList } from './ViewLists/adminView'
+import { Role } from 'tools'
 const drawerWidth = 300;
 
 
@@ -82,26 +85,29 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0,
   },
   linkH5: {
-    textDecoration: 'none',
-    color: 'white'
+    color: 'white',
+    textDecoration: "none",
+    fontSize: "20pt"
+  },
+  green: {
+    color: '#fff',
+    backgroundColor: green[500],
   },
   linkList:{
     fontSize: "36pt",
     color: "#DADBDB",
-    textDecoration: 'none',
+    textDecoration: "none"
   },
   listIcon:{
     color: '#DADBDB',
-  }
+  },
 }));
 
 
-
-
-const ModeratorView = () =>{
+const AdministrationView = observer(() =>{
   const classes = useStyles();
   const theme = useTheme();
-  const system = useContext(SystemStoreContext);
+  const systemStore = useContext(SystemStoreContext);
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -151,32 +157,20 @@ const ModeratorView = () =>{
             {theme.direction === 'ltr' ? <ChevronLeftIcon className={classes.listIcon} /> : <ChevronRightIcon className={classes.listIcon} />}
           </IconButton>
         </div>
-        <Divider />
         <List>
-          <Link to="/categorie"> 
+          <Divider />
+          <Link to="/user">
             <ListItem className={classes.linkList} button>
-              <ListItemIcon> 
-                <CategoryIcon className={classes.listIcon} />
-              </ListItemIcon>
-              <ListItemText primary={"Categories"} ></ListItemText>
+                <ListItemIcon> 
+                <Avatar className={classes.green}>
+                  <PersonIcon />
+                </Avatar>
+                </ListItemIcon>
+                <ListItemText primary={systemStore.showUserFullName} />
             </ListItem>
           </Link>
-          <Link to="/users">
-            <ListItem className={classes.linkList} button>
-              <ListItemIcon> 
-                <AccountCircleIcon className={classes.listIcon} /> 
-              </ListItemIcon>
-              <ListItemText primary={"Users"} />
-            </ListItem>
-          </Link>
-          <Link to="/orders">
-            <ListItem className={classes.linkList} button>
-              <ListItemIcon> 
-                <PaymentIcon className={classes.listIcon} /> 
-              </ListItemIcon>
-              <ListItemText primary={"Orders"} />
-            </ListItem>
-          </Link>
+          <Divider />
+          {systemStore.userRole === Role.Admin ? (<AdminList/>) : (<ModeratorsList/>)}
         </List>
       </Drawer>
     <main
@@ -185,7 +179,7 @@ const ModeratorView = () =>{
       })}
     >
       <div className={classes.drawerHeader} />
-      {switchRoutes}
+      <SwitchRoutes />
     </main>
       <ToastContainer
             position="bottom-right"
@@ -199,7 +193,7 @@ const ModeratorView = () =>{
             pauseOnHover/>
     </div>
   );
-}
+})
 
 
-export default ModeratorView
+export default AdministrationView

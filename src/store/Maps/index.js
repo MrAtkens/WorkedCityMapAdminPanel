@@ -17,12 +17,14 @@ class MapStore {
     @action async getMapsPin(){
         const pins = await mapMarkersGetApi()
         this.setPins(pins.publicPins)
+        console.log(pins)
         this.setIsLoaded(pins.status)
     }
 
     @action async getMapPinById(id){
         const pin = await mapMarkerGetByIdApi(id)
         this.setPin(pin.problemPin)
+        console.log(pin)
         this.setIsPinLoaded(pin.status)
     }
 

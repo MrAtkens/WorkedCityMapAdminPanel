@@ -12,7 +12,7 @@ import './style.scss'
 import { Loader } from 'components';
 
 const LoadingContainer = (props) => (
-    <div>Fancy loading container!</div>
+    <Loader/>
 )
 
 const MainMap = observer((props) => {

@@ -1,4 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useRef } from 'react'
+import { ToastContainer } from 'react-toastify' 
+import { observer } from 'mobx-react'
 import { Grid, Divider, Typography, Paper, Box, TextField, Button, FormControl, InputLabel, 
     OutlinedInput, InputAdornment, IconButton, FormHelperText, Grow } from '@material-ui/core';
 
@@ -12,16 +14,13 @@ import { toastAuthorizeValidationError } from 'tools'
 
 import './style.scss'
 
-const AccesGrid = () => {
+const AccesGrid = observer(() => {
     const loginRef = useRef(null);
     const passwordRef = useRef(null);
     const systemStore = useContext(SystemStoreContext);
 
-    const [showPassword, setShowPassword] = React.useState({
-        showPassword: false,
-      });
 
-    const validateValue = (login, password) => {
+    const validateValue = (login, password) => {        
         if (login.length < 5 || login.length > 20) 
             systemStore.setLoginError(true);
         else
@@ -43,19 +42,21 @@ const AccesGrid = () => {
     }
 
     const handleClickShowPassword = () => {
-        setShowPassword({ showPassword });
+        if(systemStore.isPasswordShow)
+            systemStore.setIsPasswordShow(false)
+        else
+            systemStore.setIsPasswordShow(true)
     };
     
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
 
     return(
         <Box className="background">
             <Grid container>
-                <Grid xs={4}/>
-                <Grid xs={12} sm={4}>
+                <Grid item xs={4}/>
+                <Grid item xs={12} sm={4}>
                     <Grow in={true} mountOnEnter unmountOnExit>
                         <Paper className="form-paper" elevation={3}>
                             <Paper className="form-unlock">
@@ -66,6 +67,7 @@ const AccesGrid = () => {
                                 <Divider variant={"fullWidth"}/>
                                 <TextField
                                     label="Login"
+                                    error={systemStore.loginError}
                                     helperText="Need yout login to sing in to system"
                                     inputRef={loginRef}
                                     className="form-input"
@@ -73,12 +75,13 @@ const AccesGrid = () => {
                                     variant="outlined"
                                 />
                                 <FormControl className="form-input" variant="outlined">
-                                    <InputLabel htmlFor="password">Password</InputLabel>
+                                    <InputLabel error={systemStore.passwordError} htmlFor="password">Password</InputLabel>
                                     <OutlinedInput
                                         inputRef={passwordRef}
+                                        error={systemStore.passwordError}
                                         id="password"
                                         required
-                                        type={showPassword ? 'text' : 'password'}
+                                        type={systemStore.isPasswordShow ? 'text' : 'password'}
                                         endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -87,13 +90,13 @@ const AccesGrid = () => {
                                             onMouseDown={handleMouseDownPassword}
                                             edge="end"
                                             >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {systemStore.isPasswordShow ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                         }
                                         labelWidth={70}
                                     />
-                                    <FormHelperText id="password">Need password to sing in</FormHelperText>
+                                    <FormHelperText error={systemStore.passwordError} id="password">Need password to sing in</FormHelperText>
                                 </FormControl>
                                 <Divider variant={"fullWidth"}/>
                                 <Button onClick={singInClick} className="form-button" variant="contained" color="primary">Sing in</Button>
@@ -101,10 +104,20 @@ const AccesGrid = () => {
                         </Paper>
                     </Grow>
                 </Grid>
-                <Grid xs={4}/>
+                <Grid item xs={4}/>
             </Grid>
+            <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover/>
         </Box>
     )
-}
+})
 
 export default AccesGrid

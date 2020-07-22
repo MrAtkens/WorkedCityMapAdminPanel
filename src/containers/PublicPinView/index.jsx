@@ -4,14 +4,14 @@ import AwesomeSlider from 'react-awesome-slider';
 import { observer } from 'mobx-react'
 import { useParams } from "react-router-dom"
 
-import { MapStoreContext }  from '../../store'
+import { mapStore }  from '../../store'
 
 import 'react-awesome-slider/dist/styles.css';
 import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
 import './style.scss'
 
 const PublicPinView = observer(() => {
-    const mapStore = useContext(MapStoreContext)
+    const mapStore = useContext(mapStore)
     const {id} = useParams();
 
     useEffect(() => {

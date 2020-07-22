@@ -17,7 +17,7 @@ import { useTheme } from "@material-ui/core/styles";
 
 import { observer } from "mobx-react"; // 6.x or mobx-react-lite@1.4.0
 
-import { SystemStoreContext, PinCreateContext } from "../../store";
+import { systemStore, pinCreateStore } from "../../store";
 import { toastValidationError } from "../../tools";
 
 import "./style.scss";
@@ -27,8 +27,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CreateDialogAccept = observer(props => {
-  const systemStore = useContext(SystemStoreContext);
-  const pinCreateStore = useContext(PinCreateContext);
+  const systemStore = useContext(systemStore);
+  const pinCreateStore = useContext(pinCreateStore);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const nameRef = useRef(null);

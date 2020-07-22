@@ -1,42 +1,39 @@
 import React, { useEffect, useContext } from 'react';
-import { Route, Router, Switch, BrowserRouter, Redirect } from 'react-router-dom'
+import { observer } from 'mobx-react'
+import { Route, Router, Switch, BrowserRouter } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 
-import AdminView from './AdminView/AdminView'
-import ModeratorView from './ModeratorView/ModeratorView'
+import AdministrationView from './AdministrationView'
 import { SystemStoreContext } from 'store'
 import { AccesGrid } from 'containers'
-import { Role } from 'tools'
 
 const hist = createBrowserHistory();
 
-
-function App(){
+const App = observer(() => {
 
   const systemStore = useContext(SystemStoreContext)
 
   useEffect(() => {
-    if(systemStore.moderator.id === "" && systemStore.admin.id === "" && localStorage.getItem('token') !== null)
+    if(systemStore.showIsUserDontExist){
       systemStore.getUserData()
+      }
     }, [])
-
-  if(systemStore.isAuthorize === false && localStorage.getItem('token') === null){
+  if(systemStore.showAuthorize){
     return(
       <AccesGrid />
     )
   }
-  return (
-      <BrowserRouter >
-        <Router history={hist} >
-          <Switch >
-            {systemStore.userRole === Role.Admin ? (<Route path="/" component={AdminView}/>) : (<Route path="/" component={ModeratorView}/>)}
-            <Redirect from="/"
-              to="/dashboard"/>
-          </Switch>
-        </Router>
-
-      </BrowserRouter>
-    );
-  }
+  else{
+    return (
+        <BrowserRouter >
+          <Router history={hist} >
+            <Switch >
+              <Route path="/" component={AdministrationView} />
+            </Switch>
+          </Router>
+        </BrowserRouter>
+      );  
+    }
+  })
 
 export default App;

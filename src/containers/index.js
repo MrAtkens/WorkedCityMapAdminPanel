@@ -1,3 +1,6 @@
 export { default as MainMap } from './MainMap'
 export { default as PublicPinView } from './PublicPinView'
 export { default as AccesGrid } from './AccesGrid'
+export { default as ModeratorsTable } from './ModerartorsTable'
+export { default as AddModeratorDialog } from './AddModeratorDialog'
+export { default as EditModeratorDialog } from './EditModeratorDialog'
