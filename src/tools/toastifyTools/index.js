@@ -61,6 +61,20 @@ export const toastThanksForAdd = () => {
     toast.success(`Предоставленная вами проблема отправленна успешна и на данный момент проходит модерацию, спасибо за вашу помощь городу`, defaultSetings);
 }
 
+export const toastAdminAdded = (login) => {
+    toast.success(`Вы успешно добавили админа ${login}`)
+}
+
+export const toastAdminEdit = (adminLogin) => {
+    toast.success(`Выбранный вами админ ${adminLogin} был изменён`, defaultSetings)
+}
+
+export const toastAdminDeleted = (adminLogin) => {
+    toast.success(`Выбранный вами админ ${adminLogin} был удалён`, defaultSetings);
+}
+
+
+
 export const toastModeratorAdded = (login) => {
     toast.success(`Вы успешно добавили модератора ${login}`)
 }

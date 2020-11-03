@@ -21,7 +21,7 @@ const AccesGrid = observer(() => {
 
 
     const validateValue = (login, password) => {        
-        if (login.length < 5 || login.length > 20) 
+        if (login.length < 4 || login.length > 20) 
             systemStore.setLoginError(true);
         else
             systemStore.setLoginError(false);
@@ -52,6 +52,12 @@ const AccesGrid = observer(() => {
         event.preventDefault();
     };
 
+    const handlePressEnter = (event) => {
+        if(event.key === 'Enter'){
+            singInClick()
+        }
+      }
+
     return(
         <Box className="background">
             <Grid container>
@@ -77,6 +83,7 @@ const AccesGrid = observer(() => {
                                 <FormControl className="form-input" variant="outlined">
                                     <InputLabel error={systemStore.passwordError} htmlFor="password">Password</InputLabel>
                                     <OutlinedInput
+                                        onKeyPress={handlePressEnter}
                                         inputRef={passwordRef}
                                         error={systemStore.passwordError}
                                         id="password"

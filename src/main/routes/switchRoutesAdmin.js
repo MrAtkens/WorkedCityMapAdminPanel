@@ -1,11 +1,17 @@
-import { ModeratorsView } from 'views'
+import { ModeratorsView, UsersView } from 'views'
 
 const dashboardRoutes = [
     {
         path: "moderators",
         layout: "/",
-        name: "Moderators DashBoard",
+        name: "Moderators Dash Board",
         component: ModeratorsView
+    },
+    {
+        path: "users",
+        layout: "/",
+        name: "Users Dash Board",
+        component: UsersView
     }
 ];
 

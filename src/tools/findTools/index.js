@@ -11,9 +11,8 @@ const editLastNameInArray = R.curry((lastName, key, array) => R.map(
 ))
 
 
-export function findDeletedModerator(moderatorsList, deletedModerator){
-    console.log(R.reject(R.equals(deletedModerator), moderatorsList))
-     return R.reject(R.equals(deletedModerator), moderatorsList)
+export function findDeletedData(dataList, deletedData){
+     return R.reject(R.equals(deletedData), dataList)
 }
 
 export function editModeratorsArray(firstName, lastName, key, array){

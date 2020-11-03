@@ -1,6 +1,6 @@
 import React from 'react'
-import { ListItem, ListItemIcon, ListItemText, Box } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 
 import RoomIcon from '@material-ui/icons/Room';
@@ -10,47 +10,60 @@ import OfflinePinIcon from '@material-ui/icons/OfflinePin';
 const useStyles = makeStyles(theme => ({
   linkList:{
     fontSize: "36pt",
-    color: "#DADBDB",
-    textDecoration: "none"
+    textDecoration: "none",
   },
-  listIcon:{
-    color: '#DADBDB',
-  },
-  
+  listItem:{
+    color: "#808D93",
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 20,
+    '&:hover':{
+      borderLeft: "4px solid #FF5242",
+      transformOrigin: "top",
+      transition: "height .5s ease 1.5s",
+      height: "100%"
+    },
+    '& .MuiListItemIcon-root':{
+      fontSize: "30px",
+    },
+    '&:hover .MuiListItemIcon-root': { 
+      color: "#FF5242"
+     },
+    '&:hover .MuiListItemText-primary':{
+      color: "#FF5242"
+    }
+  }
 }));
-
 
 
 export const ModeratorsList = () => {
   const classes = useStyles();
-  const theme = useTheme();
-
     return(
-      <Box>
-          <Link to="/publicPins">
-            <ListItem button>
+      <div>
+          <Link className={classes.linkList} to="/publicPins">
+            <ListItem className={classes.listItem} button>
               <ListItemIcon> 
-                <RoomIcon className={classes.listIcon} /> 
+                <RoomIcon fontSize="inherit" /> 
               </ListItemIcon>
-              <ListItemText className={classes.linkList} primary={"Public pins"} />
+              <ListItemText primary={"Public pins"} />
             </ListItem>
           </Link>
-          <Link to="/moderatedPins"> 
-            <ListItem button>
+          <Link className={classes.linkList} to="/moderatedPins"> 
+            <ListItem className={classes.listItem} button>
               <ListItemIcon> 
-                <EditLocationIcon className={classes.listIcon} />
+                <EditLocationIcon fontSize="inherit" />
               </ListItemIcon>
-              <ListItemText className={classes.linkList} primary={"Moderated pins"} ></ListItemText>
+              <ListItemText primary={"Moderated pins"} ></ListItemText>
             </ListItem>
           </Link>
-          <Link to="/solvedPins">
-            <ListItem button>
+          <Link className={classes.linkList} to="/solvedPins">
+            <ListItem className={classes.listItem} button>
               <ListItemIcon> 
-                <OfflinePinIcon className={classes.listIcon} /> 
+                <OfflinePinIcon fontSize="inherit"/> 
               </ListItemIcon>
-              <ListItemText className={classes.linkList} primary={"Solved pins"} />
+              <ListItemText primary={"Solved pins"} />
             </ListItem>
           </Link>
-      </Box>
+      </div>
     )
 }

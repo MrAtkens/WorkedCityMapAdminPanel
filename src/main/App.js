@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { observer } from 'mobx-react'
-import { Route, Router, Switch, BrowserRouter } from 'react-router-dom'
+import { Route, Router, BrowserRouter } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 
 import AdministrationView from './AdministrationView'
@@ -14,9 +14,8 @@ const App = observer(() => {
   const systemStore = useContext(SystemStoreContext)
 
   useEffect(() => {
-    if(systemStore.showIsUserDontExist){
+    if(systemStore.showIsUserDontExist)
       systemStore.getUserData()
-      }
     }, [])
   if(systemStore.showAuthorize){
     return(
@@ -27,9 +26,7 @@ const App = observer(() => {
     return (
         <BrowserRouter >
           <Router history={hist} >
-            <Switch >
               <Route path="/" component={AdministrationView} />
-            </Switch>
           </Router>
         </BrowserRouter>
       );  

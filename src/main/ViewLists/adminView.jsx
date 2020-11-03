@@ -1,57 +1,71 @@
 import React from 'react'
-import { ListItem, ListItemIcon, ListItemText, Box } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 
-import GroupIcon from '@material-ui/icons/Group';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-
+import VerifiedUserSharpIcon from '@material-ui/icons/VerifiedUserSharp';
+import AssignmentIndSharpIcon from '@material-ui/icons/AssignmentIndSharp';
 
 const useStyles = makeStyles(theme => ({
   linkList:{
     fontSize: "36pt",
-    color: "#DADBDB",
-    textDecoration: "none"
+    textDecoration: "none",
   },
-  listIcon:{
-    color: '#DADBDB',
-  },
-  
+  listItem:{
+    color: "#808D93",
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 20,
+    '&:hover':{
+      borderLeft: "4px solid #FF5242",
+      transformOrigin: "top",
+      transition: "height .5s ease 1.5s",
+      height: "100%"
+    },
+    '& .MuiListItemIcon-root':{
+      fontSize: "30px",
+    },
+    '&:hover .MuiListItemIcon-root': { 
+      color: "#FF5242"
+     },
+    '&:hover .MuiListItemText-primary':{
+      color: "#FF5242"
+    }
+  }
 }));
 
 
 
 export const AdminList = () => {
   const classes = useStyles();
-  const theme = useTheme();
 
     return(
-    <Box>
-      <Link to="/statistics">
-        <ListItem className={classes.linkList} button>
+      <div>
+      <Link className={classes.linkList} to="/statistics">
+        <ListItem className={classes.listItem} button>
           <ListItemIcon> 
-            <EqualizerIcon className={classes.listIcon} /> 
+            <EqualizerIcon fontSize="inherit" /> 
           </ListItemIcon>
           <ListItemText primary={"Statistic"} />
         </ListItem>
       </Link>
-      <Link to="/users"> 
-        <ListItem className={classes.linkList} button>
+      <Link className={classes.linkList} to="/users"> 
+        <ListItem className={classes.listItem} button>
           <ListItemIcon> 
-            <GroupIcon className={classes.listIcon} />
+            <AssignmentIndSharpIcon fontSize="inherit" />
           </ListItemIcon>
           <ListItemText primary={"Users"} ></ListItemText>
         </ListItem>
       </Link>
-      <Link to="/moderators">
-        <ListItem className={classes.linkList} button>
+      <Link className={classes.linkList} to="/moderators">
+        <ListItem className={classes.listItem} button>
           <ListItemIcon> 
-            <SupervisorAccountIcon className={classes.listIcon} /> 
+            <VerifiedUserSharpIcon fontSize="inherit" /> 
           </ListItemIcon>
           <ListItemText primary={"Moderators"} />
         </ListItem>
       </Link>
-    </Box>
+      </div>
     )
 }

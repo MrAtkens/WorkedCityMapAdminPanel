@@ -1,3 +1,6 @@
-export { mapMarkersGetApi, mapMarkerGetByIdApi, mapMarkerAdd } from './publicMapApi'
-export { moderationsService } from './moderationsUserApi'
+export { publicMapService } from './publicMapApi'
 export { authenticationService } from './authenticationApi'
+export { moderationMapService } from './moderationMapApi'
+export { moderationsService } from './moderationsUserApi'
+export { adminsService } from './adminsUserApi'
+export { usersService } from './usersApi'

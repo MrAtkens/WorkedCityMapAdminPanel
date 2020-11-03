@@ -1,0 +1,17 @@
+p, a, h2, input, label{
+    color: #808D93 !important;
+    font-weight: bold !important
+}
+span{
+    font-weight: bold !important;
+}
+.text-input{
+    width: 100%;
+    margin: 15px 0 15px 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .dialog-title{
+        font-size: 1.0rem !important;
+    }
+}

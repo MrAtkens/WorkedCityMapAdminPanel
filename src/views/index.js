@@ -1,1 +1,6 @@
+export { default as ModerationMapView } from './ModerationMapView'
+export { default as PublicMapView } from './PublicMapView'
 export { default as ModeratorsView } from './ModeratorsView'
+export { default as AdminsView } from './AdminsView'
+export { default as UsersView } from './UsersView'
+export { default as PinView } from './PinView'

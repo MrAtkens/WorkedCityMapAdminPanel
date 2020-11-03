@@ -5,6 +5,19 @@ $bkgcolor: #323332;
     justify-content: center;
     background: $bkgcolor;
     position: fixed;
+    z-index: 1000;
+}
+
+.loader-active{
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.loader-inactive{
+    visibility: collapse;
+    opacity: 0;
+    transition: visibility 0s linear .4s, opacity .4s linear;
 }
 
 .logo{

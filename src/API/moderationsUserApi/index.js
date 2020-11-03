@@ -1,11 +1,10 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-const URL='localhost:44318'
+const URL='localhost:54968'
 
 function getModerators() {
-    console.log(localStorage.getItem('token'))
-    return axios.get(`https://${URL}/api/ModeratorsCrud/GetModerators`, {headers:
+    return axios.get(`http://${URL}/api/ModeratorsCrud/GetModerators`, {headers:
     { Authorization: `Bearer ${localStorage.getItem('token')}` }}).then(response => {
         return response;
     }).catch(error => {
@@ -15,7 +14,7 @@ function getModerators() {
 }
 
 function getModeratorById(id) {
-    return axios.get(`https://${URL}/api/ModeratorsCrud/GetModeratorById/${id}`, {headers:
+    return axios.get(`http://${URL}/api/ModeratorsCrud/GetModeratorById/${id}`, {headers:
     { Authorization: `Bearer ${localStorage.getItem('token')}` }}).then(response => {
         return response
     }).catch(error => {
@@ -32,7 +31,7 @@ function addModerator(login, password, firstName, lastName, adminId){
         adminId: adminId
     }
     console.log(addModeratorDTO)
-    return axios.post(`https://${URL}/api/ModeratorsCrud/AddModerator`, addModeratorDTO, {headers:
+    return axios.post(`http://${URL}/api/ModeratorsCrud/AddModerator`, addModeratorDTO, {headers:
     { Authorization: `Bearer ${localStorage.getItem('token')}` }}).then(response => {
         console.log(response)
         return response
@@ -50,7 +49,7 @@ function editModerator(moderatorId, firstName, lastName, password, adminId, admi
         adminLogin: adminLogin
     }
     console.log(moderatorEditDTO)
-    return axios.patch(`https://${URL}/api/ModeratorsCrud/EditModerator/${moderatorId}`, moderatorEditDTO, {headers:
+    return axios.patch(`http://${URL}/api/ModeratorsCrud/EditModerator/${moderatorId}`, moderatorEditDTO, {headers:
     { Authorization: `Bearer ${localStorage.getItem('token')}` }}).then(response => {
         return response
     }).catch(error => {
@@ -59,7 +58,7 @@ function editModerator(moderatorId, firstName, lastName, password, adminId, admi
 }
 
 function deleteModerator(id){
-  return axios.delete(`https://${URL}/api/ModeratorsCrud/DeleteModerator/${id}`, {headers:
+  return axios.delete(`http://${URL}/api/ModeratorsCrud/DeleteModerator/${id}`, {headers:
   { Authorization: `Bearer ${localStorage.getItem('token')}` }}).then(response => {
     return response
   }).catch(error => {

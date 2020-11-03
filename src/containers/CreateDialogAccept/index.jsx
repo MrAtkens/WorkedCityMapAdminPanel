@@ -1,15 +1,6 @@
 import React, { useContext, useRef } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Typography,
-  TextField,
-  Slide,
-  Grid
-} from "@material-ui/core";
+import { Dialog, DialogTitle, DialogContent, DialogActions,
+Button, Typography, TextField, Slide, Grid } from "@material-ui/core";
 
 import { DropzoneArea } from "material-ui-dropzone";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -17,8 +8,8 @@ import { useTheme } from "@material-ui/core/styles";
 
 import { observer } from "mobx-react"; // 6.x or mobx-react-lite@1.4.0
 
-import { systemStore, pinCreateStore } from "../../store";
-import { toastValidationError } from "../../tools";
+import { SystemStoreContext, PinCreateContext } from "store";
+import { toastValidationError } from "tools";
 
 import "./style.scss";
 
@@ -27,15 +18,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CreateDialogAccept = observer(props => {
-  const systemStore = useContext(systemStore);
-  const pinCreateStore = useContext(pinCreateStore);
+  const systemStore = useContext(SystemStoreContext);
+  const pinCreateStore = useContext(PinCreateContext);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const nameRef = useRef(null);
   const descriptionRef = useRef(null);
 
   const handleDialogClose = () => {
-    systemStore.setIsOpen(false);
+    pinCreateStore.setIsOpen(false);
   };
 
   const handleImagesUpload = images => {
@@ -67,7 +58,8 @@ const CreateDialogAccept = observer(props => {
   };
 
   const isPinAdded = () => {
-    if (pinCreateStore.isCreated) systemStore.setIsOpen(false);
+    if (pinCreateStore.isCreated) 
+      pinCreateStore.setIsOpen(false);
   };
 
   return (
@@ -75,7 +67,7 @@ const CreateDialogAccept = observer(props => {
       fullWidth={true}
       maxWidth={"lg"}
       fullScreen={fullScreen}
-      open={systemStore.isOpen}
+      open={pinCreateStore.isOpen}
       TransitionComponent={Transition}
       onClose={handleDialogClose}
       keepMounted

@@ -28,7 +28,7 @@ export const authorizationStatusValidation = (status, message) => {
 }
 
 
-export const moderatorCrStatusValidation= (status) => {
+export const crudsCrStatusValidation= (status) => {
     if(status === 500)
         toastServerError()
     else if (status === 409)
@@ -37,7 +37,7 @@ export const moderatorCrStatusValidation= (status) => {
         toastNotFoundError()
 }
 
-export const moderatorUdStatusValidation = (status, message) => {
+export const crudsUdStatusValidation = (status, message) => {
     if(status === 500)
         toastServerError(message)
     else if (status === 404)

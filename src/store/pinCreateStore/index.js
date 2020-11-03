@@ -1,13 +1,15 @@
-import { observable, configure, action } from "mobx"
+import { observable, action, computed, configure } from "mobx"
 import { createContext } from 'react'
-import { mapMarkerAdd } from '../../API'
+import { publicMapService } from 'API'
 
 configure({ enforceActions: 'observed'})
 
 class PinCreateStore {
 
+    
     @observable isGeolocationOn = false
     @observable isCreated = false
+    @observable isOpen = false
     @observable nameError = false
     @observable descriptionError = false
     @observable imagesError = false
@@ -16,7 +18,6 @@ class PinCreateStore {
     latLng = observable.object({lat: 0, lng: 0});
 
     @action async addProblemPin(name, problemDescription){
-
         var problemPinDTO = new FormData();
         problemPinDTO.set('name', name)
         problemPinDTO.set('ProblemDescription', problemDescription)
@@ -26,9 +27,10 @@ class PinCreateStore {
         this.images.map(image => {
             problemPinDTO.append('Files', image)
         })
-        const answer = await mapMarkerAdd(problemPinDTO)
+        const answer = await publicMapService.mapMarkerAdd(problemPinDTO)
         this.setIsCreated(answer)
     }
+    
 
     @action setImages(images){
         this.images = images
@@ -44,6 +46,10 @@ class PinCreateStore {
 
     @action setImagesError(imagesError){
         this.imagesError = imagesError
+    }
+
+    @action setIsOpen(status){
+        this.isOpen = status
     }
 
     @action setIsCreated(status){

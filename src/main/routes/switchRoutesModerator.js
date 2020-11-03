@@ -1,16 +1,22 @@
-import { MainMap, PublicPinView } from 'containers'
+import { PublicMapView, PinView, ModerationMapView } from 'views'
 
 const dashboardRoutes = [{
-        path: "map",
+        path: "publicPins",
         layout: "/",
-        name: "MainMap",
-        component: MainMap,
+        name: "PublicMapView",
+        component: PublicMapView,
     },
     {
         path: "pin/:id",
         layout: "/",
         name: "PinView",
-        component: PublicPinView
+        component: PinView
+    },
+    {
+        path: "moderatedPins",
+        layout: "/",
+        name: "ModerationMapView",
+        component: ModerationMapView
     }
 ];
 
